@@ -26,57 +26,67 @@ echo view('includes/header', [
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start;">
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; align-items: start;">
         <div class="content-main">
             <!-- 기본 정보 섹션 -->
-            <section class="section-block" style="margin-top: 0;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                    <div>
-                        <p style="font-size: 0.875rem; color: var(--muted); margin-bottom: 0.5rem;">
-                            <a href="<?= site_url('/') ?>">홈</a> / <a href="<?= site_url($type) ?>"><?= esc($config['title']) ?></a>
-                        </p>
-                        <h1 style="font-size: 2.25rem; font-weight: 800; color: var(--text);"><?= esc($item['사업장명']) ?></h1>
+            <section class="section-block" style="margin-top: 0; padding: 2.5rem;">
+                <div style="border-bottom: 1px solid var(--line); padding-bottom: 2rem; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div>
+                            <nav style="font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; font-weight: 500;">
+                                <a href="<?= site_url('/') ?>" style="color: var(--primary);">홈</a> 
+                                <span style="margin: 0 0.5rem; opacity: 0.5;">/</span> 
+                                <a href="<?= site_url($type) ?>" style="color: var(--primary);"><?= esc($config['title']) ?></a>
+                            </nav>
+                            <h1 style="font-size: 2.5rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; line-height: 1.2;">
+                                <?= esc($item['사업장명']) ?>
+                            </h1>
+                        </div>
+                        <span style="background: <?= ($item['영업상태명'] ?? '') === '정상영업' ? '#dcfce7' : '#fee2e2' ?>; color: <?= ($item['영업상태명'] ?? '') === '정상영업' ? '#166534' : '#991b1b' ?>; font-size: 0.95rem; font-weight: 800; padding: 0.6rem 1.25rem; border-radius: 999px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <?= esc($item['영업상태명'] ?? '상태불명') ?>
+                        </span>
                     </div>
-                    <span style="background: <?= ($item['영업상태명'] ?? '') === '정상영업' ? '#dcfce7' : '#fee2e2' ?>; color: <?= ($item['영업상태명'] ?? '') === '정상영업' ? '#166534' : '#991b1b' ?>; font-size: 0.875rem; font-weight: 700; padding: 0.5rem 1rem; border-radius: 999px;">
-                        <?= esc($item['영업상태명'] ?? '상태불명') ?>
-                    </span>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem; font-size: 1rem; line-height: 2;">
-                    <div style="color: var(--muted); font-weight: 600;">도로명주소</div>
-                    <div><?= esc($item['도로명주소'] ?: '-') ?></div>
+                <div style="display: grid; grid-template-columns: 130px 1fr; gap: 1.5rem; font-size: 1.05rem; line-height: 1.8;">
+                    <div style="color: var(--muted); font-weight: 700;">도로명주소</div>
+                    <div style="color: var(--text); font-weight: 500;"><?= esc($item['도로명주소'] ?: '-') ?></div>
                     
-                    <div style="color: var(--muted); font-weight: 600;">지번주소</div>
-                    <div><?= esc($item['지번주소'] ?: '-') ?></div>
+                    <div style="color: var(--muted); font-weight: 700;">지번주소</div>
+                    <div style="color: var(--text); font-weight: 500;"><?= esc($item['지번주소'] ?: '-') ?></div>
                     
-                    <div style="color: var(--muted); font-weight: 600;">전화번호</div>
-                    <div style="font-weight: 700; color: var(--primary); font-size: 1.125rem;"><?= esc($item['전화번호'] ?: '정보 없음') ?></div>
+                    <div style="color: var(--muted); font-weight: 700;">전화번호</div>
+                    <div style="font-weight: 800; color: var(--primary); font-size: 1.25rem;"><?= esc($item['전화번호'] ?: '정보 없음') ?></div>
                     
-                    <div style="color: var(--muted); font-weight: 600;">인허가일자</div>
-                    <div><?= esc($item['인허가일자'] ?: '-') ?></div>
+                    <div style="color: var(--muted); font-weight: 700;">인허가일자</div>
+                    <div style="color: var(--text); font-weight: 500;"><?= esc($item['인허가일자'] ?: '-') ?></div>
 
                     <?php if (!empty($item['폐업일자'])): ?>
-                    <div style="color: var(--muted); font-weight: 600;">폐업일자</div>
-                    <div><?= esc($item['폐업일자']) ?></div>
+                    <div style="color: var(--muted); font-weight: 700;">폐업일자</div>
+                    <div style="color: #ef4444; font-weight: 600;"><?= esc($item['폐업일자']) ?></div>
                     <?php endif; ?>
                 </div>
             </section>
 
             <!-- 지도 섹션 -->
             <?php if ($mapData && $mapData['x'] && $mapData['y']): ?>
-            <section class="section-block" style="margin-top: 2rem;">
-                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem;">위치 지도</h2>
-                <div id="map" style="width:100%; height:400px; border-radius: var(--radius); border: 1px solid var(--line);"></div>
+            <section class="section-block" style="margin-top: 2rem; padding: 2rem;">
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📍 상세 위치 지도
+                </h2>
+                <div id="map" style="width:100%; height:450px; border-radius: 1rem; border: 1px solid var(--line); box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);"></div>
                 <script>
                     var mapOptions = {
                         center: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
-                        zoom: 16
+                        zoom: 16,
+                        zoomControl: true,
+                        mapTypeControl: true
                     };
                     var map = new naver.maps.Map('map', mapOptions);
                     var marker = new naver.maps.Marker({
                         position: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
                         map: map,
-                        title: '<?= esc($item['사업장명']) ?>'
+                        animation: naver.maps.Animation.DROP
                     });
                 </script>
             </section>
@@ -95,22 +105,20 @@ echo view('includes/header', [
 
             <!-- 네이버 블로그 정보 -->
             <?php if (!empty($blog['items'])): ?>
-                <section class="section-block" style="margin-top: 2rem;">
-                    <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="color: #2db400; font-weight: 900;">N</span> 관련 블로그 소식
+                <section class="section-block" style="margin-top: 2rem; padding: 2rem;">
+                    <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="background: #2db400; color: #fff; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 1.125rem; font-weight: 900;">N</span> 
+                        관련 블로그 소식
                     </h2>
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <?php foreach (array_slice($blog['items'], 0, 5) as $blog_item): ?>
-                            <a href="<?= $blog_item['link'] ?>" target="_blank" rel="nofollow" style="display: block; padding: 1rem; border: 1px solid #f1f5f9; border-radius: 0.75rem; transition: background 0.2s;">
-                                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text);"><?= $blog_item['title'] ?></h3>
-                                <p style="font-size: 0.9375rem; color: var(--muted); margin-bottom: 0.5rem;"><?= strip_tags($blog_item['description']) ?></p>
-                                <div style="font-size: 0.8125rem; color: var(--primary); font-weight: 600;">
-                                    <?= esc($blog_item['bloggername']) ?> | <?= date('Y.m.d', strtotime($blog_item['postdate'])) ?>
+                            <a href="<?= $blog_item['link'] ?>" target="_blank" rel="nofollow" class="blog-item">
+                                <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--text);"><?= $blog_item['title'] ?></h3>
+                                <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.5;"><?= strip_tags($blog_item['description']) ?></p>
+                                <div style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">
+                                    <?= esc($blog_item['bloggername']) ?> <span style="margin: 0 0.5rem; opacity: 0.3;">|</span> <?= date('Y.m.d', strtotime($blog_item['postdate'])) ?>
                                 </div>
                             </a>
-                            <style>
-                                .content-main a:hover { background: #f8fafc; }
-                            </style>
                         <?php endforeach; ?>
                     </div>
                 </section>
@@ -119,23 +127,20 @@ echo view('includes/header', [
 
         <!-- 사이드바 -->
         <aside class="sidebar">
-            <div class="section-block" style="margin-top: 0; padding: 1.5rem;">
-                <h2 style="font-size: 1.125rem; font-weight: 800; margin-bottom: 1.25rem;">주변 <?= esc($config['title']) ?></h2>
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="section-block" style="margin-top: 0; padding: 1.75rem;">
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--text);">🏷️ 주변 <?= esc($config['title']) ?></h2>
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
                     <?php foreach ($relatedItems as $rel): ?>
-                        <a href="<?= site_url($type . '/' . $rel['id']) ?>" style="display: block; padding-bottom: 1rem; border-bottom: 1px solid var(--line); transition: color 0.2s;">
-                            <div style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 0.375rem;"><?= esc($rel['사업장명']) ?></div>
+                        <a href="<?= site_url($type . '/' . $rel['id']) ?>" class="related-link">
+                            <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;"><?= esc($rel['사업장명']) ?></div>
                             <div style="font-size: 0.8125rem; color: var(--muted); line-height: 1.4;"><?= esc($rel['지번주소'] ?: $rel['도로명주소']) ?></div>
                         </a>
-                        <style>
-                            .sidebar a:hover div { color: var(--primary); }
-                        </style>
                     <?php endforeach; ?>
                 </div>
             </div>
 
             <!-- 사이드바 광고 -->
-            <div style="margin-top: 2rem;">
+            <div style="margin-top: 2rem; position: sticky; top: 100px;">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-6686738239613464"
@@ -149,11 +154,22 @@ echo view('includes/header', [
 </main>
 
 <style>
-@media (max-width: 992px) {
-    main > div {
-        grid-template-columns: 1fr !important;
+    .blog-item {
+        display: block; padding: 1.5rem; border: 1px solid #f1f5f9; border-radius: 1rem; 
+        transition: all 0.2s; background: #fff;
     }
-}
+    .blog-item:hover { background: #f8fafc; border-color: var(--primary); transform: translateX(4px); }
+    
+    .related-link {
+        display: block; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; transition: all 0.2s;
+    }
+    .related-link:hover { color: var(--primary); transform: translateX(4px); }
+    .related-link:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    @media (max-width: 1024px) {
+        main > div { grid-template-columns: 1fr !important; }
+        .sidebar { margin-top: 2rem; }
+    }
 </style>
 
 <?= view('includes/footer') ?>

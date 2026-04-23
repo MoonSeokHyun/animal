@@ -133,7 +133,6 @@ $searchAction = site_url($searchType);
                 <a href="<?= site_url('slaughterhouse') ?>">도축업</a>
             </div>
         </div>
-        <a href="<?= site_url('sitemap.xml') ?>" style="font-weight: 600;">사이트맵</a>
       </nav>
     </div>
   </header>
