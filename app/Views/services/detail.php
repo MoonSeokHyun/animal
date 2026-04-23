@@ -69,7 +69,7 @@ echo view('includes/header', [
             </section>
 
             <!-- 지도 섹션 -->
-            <?php if ($mapData && $mapData['x'] && $mapData['y']): ?>
+            <?php if (!empty($mapData['x']) && !empty($mapData['y'])): ?>
             <section class="section-block" style="margin-top: 2rem; padding: 2rem;">
                 <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
                     📍 상세 위치 지도

@@ -90,16 +90,11 @@ class NaverApiModel extends Model
     }
 
     public function map($address){
+        $result = ['x' => 0, 'y' => 0, 'roadAddress' => $address, 'jibunAddress' => $address];
 
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
         if (strpos($userAgent, 'Googlebot') !== false) {
-            $result['x'] = 0;
-            $result['y'] = 0;
-
-            $result['roadAddress'] = $address;
-            $result['jibunAddress'] = $address;
-
             return $result;
         }
     
@@ -122,24 +117,22 @@ class NaverApiModel extends Model
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $response = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
 
-        if (curl_errno($ch)) {
-            
-        } else {
-            $data = json_decode($response, true);
+        if ($err) {
+            return $result;
         }
 
-        $result['x'] = $data['addresses'][0]['x'];
-        $result['y'] = $data['addresses'][0]['y'];
-
-        $result['roadAddress'] = $data['addresses'][0]['roadAddress'];
-        $result['jibunAddress'] = $data['addresses'][0]['jibunAddress'];
-
-
-        // cURL 종료
-        curl_close($ch);
+        $data = json_decode($response, true);
+        
+        if (!empty($data['addresses'][0])) {
+            $result['x'] = $data['addresses'][0]['x'] ?? 0;
+            $result['y'] = $data['addresses'][0]['y'] ?? 0;
+            $result['roadAddress'] = $data['addresses'][0]['roadAddress'] ?? $address;
+            $result['jibunAddress'] = $data['addresses'][0]['jibunAddress'] ?? $address;
+        }
 
         return $result;
     }
-    
 }

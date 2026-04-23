@@ -238,19 +238,23 @@ class AnimalService extends BaseController
         $blog = $blogJson ? json_decode($blogJson, true) : [];
 
         // 관련 업체 (같은 도시 내에서 검색)
-        $addressParts = explode(' ', $item['지번주소'] ?? $item['도로명주소']);
+        $address = $item['지번주소'] ?: $item['도로명주소'];
+        $addressParts = explode(' ', $address);
         $city = $addressParts[0] ?? '';
         $county = $addressParts[1] ?? '';
 
-        $relatedItems = $model
-            ->select('id, 사업장명, 지번주소, 도로명주소')
-            ->groupStart()
-                ->like('지번주소', $city . ' ' . $county)
-                ->orLike('도로명주소', $city . ' ' . $county)
-            ->groupEnd()
-            ->where('id !=', $item['id'])
-            ->orderBy('id', 'DESC')
-            ->findAll(6);
+        $relatedItems = [];
+        if (!empty($city)) {
+            $relatedItems = $model
+                ->select('id, 사업장명, 지번주소, 도로명주소')
+                ->groupStart()
+                    ->like('지번주소', $city . ' ' . $county)
+                    ->orLike('도로명주소', $city . ' ' . $county)
+                ->groupEnd()
+                ->where('id !=', $item['id'])
+                ->orderBy('id', 'DESC')
+                ->findAll(6);
+        }
 
         $jsonLd = [
             "@context" => "https://schema.org",
