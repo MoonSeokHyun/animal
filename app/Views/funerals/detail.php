@@ -34,8 +34,32 @@
       </div>
     </section>
 
+    <!-- 지도 섹션 -->
+    <?php if (!empty($mapData['x']) && !empty($mapData['y'])): ?>
+    <section class="section-block" style="margin-top: 1.5rem; padding: 1.5rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+            📍 상세 위치 지도
+        </h2>
+        <div id="map" style="width:100%; height:400px; border-radius: 10px; border: 1px solid #e2e8eb;"></div>
+        <script>
+            var mapOptions = {
+                center: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
+                zoom: 16,
+                zoomControl: true,
+                mapTypeControl: true
+            };
+            var map = new naver.maps.Map('map', mapOptions);
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
+                map: map,
+                animation: naver.maps.Animation.DROP
+            });
+        </script>
+    </section>
+    <?php endif; ?>
+
     <section class="section-block">
-      <h2 style="font-size:20px; margin-bottom:12px;">관련 비용</h2>
+      <h2 style="font-size:20px; margin-bottom:12px;">기본 정보</h2>
       <?php if (empty($items)): ?>
         <p>관련 비용 정보가 없습니다.</p>
       <?php else: ?>

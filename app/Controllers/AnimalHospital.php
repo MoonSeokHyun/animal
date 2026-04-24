@@ -67,6 +67,7 @@ class AnimalHospital extends BaseController
         // API 호출
         $blogJson = $naverModel->blog($keyword);
         $imageJson = $naverModel->image($keyword);
+        $mapData = $naverModel->map($address);
 
         // 결과 디코딩
         $blog = $blogJson ? json_decode($blogJson, true) : [];
@@ -106,6 +107,7 @@ class AnimalHospital extends BaseController
             'hospital' => $hospital,
             'blog' => $blog,
             'images' => $images,
+            'mapData' => $mapData,
             'relatedHospitals' => $relatedHospitals,
             'seoTitle' => "{$hospitalName} 위치/진료/연락처 상세 정보 | AnimalCare",
             'seoDescription' => "{$hospitalName}의 주소, 연락처, 영업 상태를 확인하고 주변 동물병원도 함께 찾아보세요.",

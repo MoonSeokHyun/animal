@@ -69,6 +69,7 @@ class FuneralFacility extends BaseController
         // API 호출
         $blogJson = $naverModel->blog($keyword);
         $imageJson = $naverModel->image($keyword);
+        $mapData = $naverModel->map($address);
 
         // 결과 디코딩
         $blog = $blogJson ? json_decode($blogJson, true) : [];
@@ -111,6 +112,7 @@ class FuneralFacility extends BaseController
             'items' => $items,
             'blog' => $blog,
             'images' => $images,
+            'mapData' => $mapData,
             'relatedFacilities' => $relatedFacilities,
             'seoTitle' => "{$facilityName} 위치/시설/비용 상세 정보 | F.easehub",
             'seoDescription' => "{$facilityName}의 주소, 연락처, 시설, 비용 정보를 확인하고 유사한 지역 장례식장도 비교해보세요.",

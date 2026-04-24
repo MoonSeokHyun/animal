@@ -43,6 +43,30 @@ echo view('includes/header', [
                 </div>
             </section>
 
+            <!-- 지도 섹션 -->
+            <?php if (!empty($mapData['x']) && !empty($mapData['y'])): ?>
+            <section class="section-block" style="margin-top: 2rem; padding: 2rem;">
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📍 상세 위치 지도
+                </h2>
+                <div id="map" style="width:100%; height:450px; border-radius: 1rem; border: 1px solid var(--line); box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);"></div>
+                <script>
+                    var mapOptions = {
+                        center: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
+                        zoom: 16,
+                        zoomControl: true,
+                        mapTypeControl: true
+                    };
+                    var map = new naver.maps.Map('map', mapOptions);
+                    var marker = new naver.maps.Marker({
+                        position: new naver.maps.LatLng(<?= $mapData['y'] ?>, <?= $mapData['x'] ?>),
+                        map: map,
+                        animation: naver.maps.Animation.DROP
+                    });
+                </script>
+            </section>
+            <?php endif; ?>
+
             <!-- 네이버 블로그 정보 -->
             <?php if (!empty($blog['items'])): ?>
                 <section class="section-block" style="margin-top: 2rem;">
