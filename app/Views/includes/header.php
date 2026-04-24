@@ -41,7 +41,7 @@ $searchAction = site_url($searchType);
   <meta property="og:description" content="<?= esc($seoDescription) ?>" />
   <meta property="og:url" content="<?= esc($canonicalUrl) ?>" />
   <meta property="og:site_name" content="<?= esc($siteName) ?>" />
-
+  <meta name="naver-site-verification" content="1fdf8b438e524cc0c44d8c4c20cf111f754d5595" />
   <script type="application/ld+json">
   <?= json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
   </script>
