@@ -21,6 +21,9 @@ class Home extends BaseController
             'canonicalUrl' => base_url(),
             'config' => [
                 'search_placeholder' => '병원, 약국, 업체명 또는 지역 검색'
+            ],
+            'adSlots' => [
+                'home_top' => '1204098626'
             ]
         ];
 
