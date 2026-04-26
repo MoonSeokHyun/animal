@@ -18,10 +18,9 @@
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6686738239613464"
-             data-ad-slot="1204098626"
+             data-ad-slot="<?= esc($adSlots['home_top']) ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -70,18 +69,10 @@
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6686738239613464"
-             data-ad-slot="1204098626"
+             data-ad-slot="<?= esc($adSlots['home_bottom']) ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 </main>
-
-<style>
-    @media (max-width: 768px) {
-        main > div { grid-template-columns: 1fr !important; }
-    }
-    .section-block a:hover { border-color: var(--primary); background: #f8fafc; }
-</style>
 
 <?= view('includes/footer') ?>

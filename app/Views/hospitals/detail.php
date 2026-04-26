@@ -3,13 +3,15 @@ $hospital = $hospital ?? [];
 $blog = $blog ?? [];
 $images = $images ?? [];
 $relatedHospitals = $relatedHospitals ?? [];
+$mapData = $mapData ?? [];
 
 echo view('includes/header', [
     'seoTitle' => $seoTitle,
     'seoDescription' => $seoDescription,
     'seoKeywords' => $seoKeywords,
     'canonicalUrl' => $canonicalUrl,
-    'jsonLd' => $jsonLd
+    'jsonLd' => $jsonLd,
+    'includeMapScript' => !empty($mapData['x']) && !empty($mapData['y']),
 ]);
 ?>
 
@@ -104,13 +106,5 @@ echo view('includes/header', [
         </aside>
     </div>
 </main>
-
-<style>
-@media (max-width: 992px) {
-    main > div {
-        grid-template-columns: 1fr !important;
-    }
-}
-</style>
 
 <?= view('includes/footer') ?>

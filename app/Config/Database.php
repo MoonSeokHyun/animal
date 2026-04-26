@@ -43,7 +43,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'saveQueries'  => true,
+        'saveQueries'  => (ENVIRONMENT !== 'production'),
         'port'         => 3306, // 필요한 경우 포트 번호를 추가하세요
         'numberNative' => false,
         'dateFormat'   => [

@@ -67,3 +67,18 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# ADS / ANALYTICS
+#--------------------------------------------------------------------
+
+# GA4_MEASUREMENT_ID = G-XXXXXXXXXX
+# AD_SLOT_HOME_TOP = 1204098626
+# AD_SLOT_HOME_BOTTOM = 1204098626
+# AD_SLOT_SERVICE_LIST_TOP = 1204098626
+# AD_SLOT_SERVICE_DETAIL_TOP = 1204098626
+# AD_SLOT_SERVICE_DETAIL_MID = 1204098626
+# AD_SLOT_SERVICE_DETAIL_SIDEBAR = 1204098626
+# AD_SLOT_FUNERAL_LIST_TOP = 1204098626
+# AD_SLOT_FUNERAL_DETAIL_TOP = 1204098626
+# AD_SLOT_FUNERAL_DETAIL_BOTTOM = 1204098626

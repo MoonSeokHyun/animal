@@ -1,4 +1,7 @@
-<?php include APPPATH . 'Views/includes/header.php'; ?>
+<?php
+$includeMapScript = !empty($mapData['x']) && !empty($mapData['y']);
+include APPPATH . 'Views/includes/header.php';
+?>
 
 <main>
   <div class="container">
@@ -15,10 +18,9 @@
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-6686738239613464"
-         data-ad-slot="1204098626"
+         data-ad-slot="<?= esc($adSlots['funeral_detail_top']) ?>"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
     <section class="section-block">
       <h2 style="font-size:20px; margin-bottom:12px;">기본 정보</h2>
@@ -79,10 +81,9 @@
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-6686738239613464"
-         data-ad-slot="1204098626"
+         data-ad-slot="<?= esc($adSlots['funeral_detail_bottom']) ?>"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
     <?php if (!empty($relatedFacilities)): ?>
       <section class="section-block">

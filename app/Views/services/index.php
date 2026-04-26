@@ -20,10 +20,9 @@ echo view('includes/header', [
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6686738239613464"
-             data-ad-slot="1204098626"
+             data-ad-slot="<?= esc($adSlots['service_list_top']) ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <div class="section-block" style="padding: 2.5rem;">
@@ -71,23 +70,5 @@ echo view('includes/header', [
         <?php endif; ?>
     </div>
 </main>
-
-<style>
-    .item-card {
-        display: block; background: #fff; border: 1px solid var(--line); border-radius: 1.25rem; 
-        padding: 1.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    .item-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        border-color: var(--primary);
-    }
-    .status-badge {
-        font-size: 0.75rem; font-weight: 800; padding: 0.35rem 0.75rem; border-radius: 2rem;
-    }
-    .status-active { background: #dcfce7; color: #166534; }
-    .status-closed { background: #fee2e2; color: #991b1b; }
-</style>
 
 <?= view('includes/footer') ?>

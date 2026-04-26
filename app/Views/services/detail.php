@@ -10,7 +10,8 @@ echo view('includes/header', [
     'seoKeywords' => $seoKeywords,
     'canonicalUrl' => $canonicalUrl,
     'jsonLd' => $jsonLd,
-    'config' => $config
+    'config' => $config,
+    'includeMapScript' => !empty($mapData['x']) && !empty($mapData['y']),
 ]);
 ?>
 
@@ -20,10 +21,9 @@ echo view('includes/header', [
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6686738239613464"
-             data-ad-slot="1204098626"
+             data-ad-slot="<?= esc($adSlots['service_detail_top']) ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; align-items: start;">
@@ -97,10 +97,9 @@ echo view('includes/header', [
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-6686738239613464"
-                     data-ad-slot="1204098626"
+                     data-ad-slot="<?= esc($adSlots['service_detail_mid']) ?>"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
 
             <!-- 네이버 블로그 정보 -->
@@ -144,32 +143,12 @@ echo view('includes/header', [
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-6686738239613464"
-                     data-ad-slot="1204098626"
+                     data-ad-slot="<?= esc($adSlots['service_detail_sidebar']) ?>"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </aside>
     </div>
 </main>
-
-<style>
-    .blog-item {
-        display: block; padding: 1.5rem; border: 1px solid #f1f5f9; border-radius: 1rem; 
-        transition: all 0.2s; background: #fff;
-    }
-    .blog-item:hover { background: #f8fafc; border-color: var(--primary); transform: translateX(4px); }
-    
-    .related-link {
-        display: block; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; transition: all 0.2s;
-    }
-    .related-link:hover { color: var(--primary); transform: translateX(4px); }
-    .related-link:last-child { border-bottom: 0; padding-bottom: 0; }
-
-    @media (max-width: 1024px) {
-        main > div { grid-template-columns: 1fr !important; }
-        .sidebar { margin-top: 2rem; }
-    }
-</style>
 
 <?= view('includes/footer') ?>

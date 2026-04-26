@@ -11,6 +11,22 @@ $seoDescription = $seoDescription ?? $defaultDescription;
 $seoKeywords = $seoKeywords ?? $defaultKeywords;
 $canonicalUrl = $canonicalUrl ?? current_url();
 $seoImage = base_url('favicon.ico');
+$currentSearch = trim((string) service('request')->getGet('search'));
+$robotsContent = $currentSearch !== ''
+    ? 'noindex,follow,max-image-preview:large'
+    : 'index,follow,max-image-preview:large';
+$defaultAdSlot = '1204098626';
+$adSlots = array_merge([
+    'home_top' => getenv('AD_SLOT_HOME_TOP') ?: $defaultAdSlot,
+    'home_bottom' => getenv('AD_SLOT_HOME_BOTTOM') ?: $defaultAdSlot,
+    'service_list_top' => getenv('AD_SLOT_SERVICE_LIST_TOP') ?: $defaultAdSlot,
+    'service_detail_top' => getenv('AD_SLOT_SERVICE_DETAIL_TOP') ?: $defaultAdSlot,
+    'service_detail_mid' => getenv('AD_SLOT_SERVICE_DETAIL_MID') ?: $defaultAdSlot,
+    'service_detail_sidebar' => getenv('AD_SLOT_SERVICE_DETAIL_SIDEBAR') ?: $defaultAdSlot,
+    'funeral_list_top' => getenv('AD_SLOT_FUNERAL_LIST_TOP') ?: $defaultAdSlot,
+    'funeral_detail_top' => getenv('AD_SLOT_FUNERAL_DETAIL_TOP') ?: $defaultAdSlot,
+    'funeral_detail_bottom' => getenv('AD_SLOT_FUNERAL_DETAIL_BOTTOM') ?: $defaultAdSlot,
+], $adSlots ?? []);
 
 if (!isset($jsonLd)) {
     $jsonLd = [
@@ -24,6 +40,29 @@ if (!isset($jsonLd)) {
 // 현재 서비스 타입에 따른 검색 액션 URL 설정
 $searchType = $type ?? 'hospitals';
 $searchAction = site_url($searchType);
+$includeMapScript = $includeMapScript ?? false;
+$ga4MeasurementId = getenv('GA4_MEASUREMENT_ID') ?: '';
+$siteJsonLd = [
+    "@context" => "https://schema.org",
+    "@graph" => [
+        [
+            "@type" => "WebSite",
+            "name" => $siteName,
+            "url" => base_url('/'),
+            "potentialAction" => [
+                "@type" => "SearchAction",
+                "target" => site_url($searchType) . "?search={search_term_string}",
+                "query-input" => "required name=search_term_string",
+            ],
+        ],
+        [
+            "@type" => "Organization",
+            "name" => $siteName,
+            "url" => base_url('/'),
+            "logo" => $seoImage,
+        ],
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -34,73 +73,49 @@ $searchAction = site_url($searchType);
   <title><?= esc($seoTitle) ?></title>
   <meta name="description" content="<?= esc($seoDescription) ?>" />
   <meta name="keywords" content="<?= esc($seoKeywords) ?>" />
+  <meta name="robots" content="<?= esc($robotsContent) ?>" />
   <link rel="canonical" href="<?= esc($canonicalUrl) ?>" />
+  <link rel="alternate" hreflang="ko-KR" href="<?= esc($canonicalUrl) ?>" />
+  <link rel="alternate" hreflang="x-default" href="<?= esc($canonicalUrl) ?>" />
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin />
+  <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
+  <link rel="dns-prefetch" href="//googleads.g.doubleclick.net" />
+  <link rel="stylesheet" href="<?= base_url('assets/css/site.css') ?>" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="<?= esc($seoTitle) ?>" />
   <meta property="og:description" content="<?= esc($seoDescription) ?>" />
   <meta property="og:url" content="<?= esc($canonicalUrl) ?>" />
   <meta property="og:site_name" content="<?= esc($siteName) ?>" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:image" content="<?= esc($seoImage) ?>" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<?= esc($seoTitle) ?>" />
+  <meta name="twitter:description" content="<?= esc($seoDescription) ?>" />
+  <meta name="twitter:image" content="<?= esc($seoImage) ?>" />
   <meta name="naver-site-verification" content="1fdf8b438e524cc0c44d8c4c20cf111f754d5595" />
+  <script type="application/ld+json">
+  <?= json_encode($siteJsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+  </script>
   <script type="application/ld+json">
   <?= json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
   </script>
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6686738239613464" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=c3hsihbnx3"></script>
+  <?php if ($ga4MeasurementId !== ''): ?>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc($ga4MeasurementId) ?>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<?= esc($ga4MeasurementId) ?>', { 'anonymize_ip': true });
+  </script>
+  <?php endif; ?>
+  <?php if ($includeMapScript): ?>
+  <script async defer src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=c3hsihbnx3"></script>
+  <?php endif; ?>
 
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --line: #e2e8f0;
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      --radius: 1rem;
-      --max: 1200px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    a { color: inherit; text-decoration: none; transition: 0.2s; }
-
-    .site-header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .header-inner { max-width: var(--max); margin: 0 auto; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
-    
-    .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); letter-spacing: -0.05em; }
-
-    .nav-menu { display: flex; gap: 1.5rem; align-items: center; }
-    .nav-item { position: relative; padding: 0.5rem 0; font-weight: 600; cursor: pointer; color: var(--text); }
-    .nav-item:hover { color: var(--primary); }
-    .nav-item::after { content: '▼'; font-size: 0.6rem; margin-left: 0.4rem; opacity: 0.5; }
-    
-    .dropdown {
-        position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid var(--line); 
-        border-radius: 0.75rem; box-shadow: var(--shadow); padding: 1rem; 
-        display: none; grid-template-columns: repeat(2, 140px); gap: 0.5rem; min-width: 320px;
-    }
-    .nav-item:hover .dropdown { display: grid; }
-    .dropdown a { padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; color: var(--muted); }
-    .dropdown a:hover { background: #f1f5f9; color: var(--primary); }
-
-    .search-section { background: #fff; border-bottom: 1px solid var(--line); padding: 1rem 0; }
-    .search-container { max-width: 700px; margin: 0 auto; padding: 0 1.25rem; }
-    .search-form { display: flex; gap: 0.5rem; background: #f1f5f9; border-radius: 999px; padding: 0.4rem 0.4rem 0.4rem 1.25rem; border: 1px solid transparent; }
-    .search-form:focus-within { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
-    .search-form input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 1rem; }
-    .search-form button { background: var(--primary); color: #fff; border: 0; padding: 0.6rem 1.5rem; border-radius: 999px; font-weight: 700; cursor: pointer; }
-    
-    .container { max-width: var(--max); margin: 0 auto; padding: 2rem 1.25rem; }
-    .section-block { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-
-    @media (max-width: 768px) {
-        .nav-menu { gap: 1rem; font-size: 0.9rem; }
-        .dropdown { left: -100px; grid-template-columns: 1fr; min-width: 200px; }
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">

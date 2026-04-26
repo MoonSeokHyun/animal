@@ -12,10 +12,9 @@
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-6686738239613464"
-             data-ad-slot="1204098626"
+             data-ad-slot="<?= esc($adSlots['funeral_list_top']) ?>"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
         <section class="section-block">
             <?php if (empty($facilities)): ?>

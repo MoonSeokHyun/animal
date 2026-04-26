@@ -1,53 +1,3 @@
-<style>
-  .site-footer {
-    margin-top: 42px;
-    border-top: 1px solid #e2e8eb;
-    background: #fff;
-  }
-
-  .footer-inner {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 26px 18px 34px;
-    display: grid;
-    gap: 18px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .footer-title {
-    font-size: 14px;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: #1e2428;
-  }
-
-  .footer-inner p,
-  .footer-inner li,
-  .footer-inner a {
-    font-size: 13px;
-    color: #5d6670;
-    line-height: 1.6;
-  }
-
-  .footer-inner ul {
-    list-style: none;
-  }
-
-  .copyright {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 0 18px 18px;
-    font-size: 12px;
-    color: #8a929b;
-  }
-
-  @media (max-width: 780px) {
-    .footer-inner {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
 <footer class="site-footer">
   <div class="footer-inner">
     <section>
@@ -81,6 +31,60 @@ wcs_add["wa"] = "9b158284b08188";
 if(window.wcs) {
   wcs_do();
 }
+</script>
+<script>
+  (function () {
+    function initAd(el) {
+      if (el.dataset.adInitialized === '1') {
+        return;
+      }
+
+      if (!window.adsbygoogle) {
+        window.setTimeout(function () {
+          initAd(el);
+        }, 300);
+        return;
+      }
+
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        el.dataset.adInitialized = '1';
+      } catch (e) {
+        window.setTimeout(function () {
+          initAd(el);
+        }, 500);
+      }
+    }
+
+    var ads = document.querySelectorAll('ins.adsbygoogle');
+
+    if (!ads.length) {
+      return;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      ads.forEach(function (el) {
+        initAd(el);
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          initAd(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '200px 0px',
+      threshold: 0.01
+    });
+
+    ads.forEach(function (el) {
+      observer.observe(el);
+    });
+  })();
 </script>
 </body>
 </html>
