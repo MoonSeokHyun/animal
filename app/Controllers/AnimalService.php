@@ -283,6 +283,7 @@ class AnimalService extends BaseController
             'adSlots' => [
                 'service_detail_top' => '1204098626',
                 'service_detail_mid' => '1204098626',
+                'service_detail_sidebar' => '1204098626',
                 'service_detail_bottom' => '1204098626'
             ],
             'seoTitle' => "{$name} - {$config['title']} 위치/전화번호 안내 | AnimalCare",
