@@ -201,6 +201,9 @@ class AnimalService extends BaseController
             'pager' => $model->pager,
             'search' => $search,
             'config' => $config,
+            'adSlots' => [
+                'service_list_top' => '1204098626'
+            ],
             'seoTitle' => ($search ? "\"{$search}\" " : "") . "{$config['title']} 위치/연락처 목록 | AnimalCare",
             'seoDescription' => $search ? "{$search} 관련 {$config['title']} 검색 결과입니다. 전국 {$config['title']} 정보를 실시간으로 확인하세요." : ($config['desc'] ?? "전국 {$config['title']} 정보를 확인하세요."),
             'seoKeywords' => $config['keywords'],
@@ -277,6 +280,10 @@ class AnimalService extends BaseController
             'relatedItems' => $relatedItems,
             'config' => $config,
             'mapData' => $mapData,
+            'adSlots' => [
+                'service_detail_top' => '1204098626',
+                'service_detail_bottom' => '1204098626'
+            ],
             'seoTitle' => "{$name} - {$config['title']} 위치/전화번호 안내 | AnimalCare",
             'seoDescription' => "{$name}의 주소, 연락처, 영업 상태 등 상세 정보를 확인하세요. 주변의 다른 {$config['title']} 정보도 함께 제공합니다.",
             'seoKeywords' => "{$name}, {$city}, {$county}, {$config['title']}, 동물서비스 위치",
