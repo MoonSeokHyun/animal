@@ -120,7 +120,7 @@ $siteJsonLd = [
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a href="<?= site_url('/') ?>" class="logo">sex</a>
+      <a href="<?= site_url('/') ?>" class="logo">AnimalCare!</a>
       <nav class="nav-menu">
         <div class="nav-item">반려동물 서비스
             <div class="dropdown">
